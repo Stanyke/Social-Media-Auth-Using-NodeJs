@@ -136,7 +136,7 @@ app.get('/facebook/callback', passport.authenticate('facebook', {
 app.get('/auth/facebook', passport.authenticate('facebook', { scope : 'email,user_photos' }))
 
 app.get('/profile',(req,res) => {
-    res.send("you are authenticated")
+    res.render("profile.ejs")
 })
 
 
