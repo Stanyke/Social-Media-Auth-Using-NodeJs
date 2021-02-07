@@ -2,6 +2,10 @@ const express = require('express')
 const cors = require('cors')
 const app = express()
 
+const runDB = require("./config/DB")
+
+app.set("view engine","ejs")
+
 app.use(express.static(`${__dirname}/public`));
 
 app.use(express.json({ limit: '100mb' }))

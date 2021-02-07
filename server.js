@@ -1,7 +1,6 @@
 const express = require('express')
 const app = require('./index')
-
-require('dotenv').config()
+const appApi = require('./app')
 
 app.get('/api/hello', (req, res) => {
     return res.send({ express: 'Hello From Express' });
