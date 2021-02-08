@@ -9,13 +9,14 @@ const FbPassport = passport.use(new FacebookStrategy({
     clientSecret: process.env.FB_APP_SECRET,
     callbackURL: "http://localhost:5000/facebook/callback",
     profileFields   : ['id','displayName','name','gender','picture.type(large)','email']
-}, (accessToken, refreshToken, profile, done) => {
+}, async (accessToken, refreshToken, profile, done) => {
 
     const userData = {
         "id": profile.id,
         "fname": profile._json.first_name,
         "lname": profile._json.last_name,
-        "birthday": profile._json.birthday
+        "birthday": profile._json.birthday,
+        "email": profile._json.email
     };
 
     const messageToUser = {
@@ -27,8 +28,19 @@ const FbPassport = passport.use(new FacebookStrategy({
     }
 
     //console.log(messageToUser)
-    console.log(profile)
-    return done(null,profile)
+    //console.log(profile)
+
+    
+    //return done(null,profile)
+    
+    let getUser = await User.findOne({email: userData.email}).exec()
+    if(getUser){
+        return done(null, { "success": false, "message": "Email already registered with us." })
+    }
+    else{
+        return done(null, { "success": false, "message": `Email: ${userData.email} was not found.` })
+    }
+
     //return messageToUser
     //the same User variable from above
     // User.findOneOrCreate({facebookId: profile.id}, user, function (err, user) {
