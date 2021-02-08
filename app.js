@@ -19,12 +19,13 @@ passport.serializeUser( (user, done) => {
     done(null, user);
 });
 
-passport.deserializeUser(function (id, done) {
+passport.deserializeUser( (id, done) => {
     console.log('deserialize :', user)
     done(null, user);
 });
 
 app.get("/failed", (req,res)=> res.send("you have failed to login"));
+
 app.get('/auth/google', passport.authenticate('google', { scope: ['profile','email'] }));
 
 app.get('/google/callback', passport.authenticate('google', {
@@ -36,8 +37,6 @@ app.get('/google/callback', passport.authenticate('google', {
     }
 );
 
-
-
 app.get('/facebook/callback', passport.authenticate('facebook', {
     successRedirect : '/profile',
     failureRedirect : '/failed'
@@ -46,8 +45,6 @@ app.get('/facebook/callback', passport.authenticate('facebook', {
         res.status(200).send(userDetails)
     }
 );
-
-
 
 app.get('/auth/facebook', passport.authenticate('facebook', { scope : 'email,user_photos' }))
 
