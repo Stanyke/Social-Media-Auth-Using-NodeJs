@@ -10,11 +10,12 @@ const FbPassport = passport.use(new FacebookStrategy({
     callbackURL: "http://localhost:5000/facebook/callback",
     profileFields   : ['id','displayName','name','gender','picture.type(large)','email']
 }, (accessToken, refreshToken, profile, done) => {
-    var user = {
-        id: profile.id,
-        firstName: profile._json.first_name,
-        lastName: profile._json.last_name,
-        birthday: profile._json.birthday
+
+    const userData = {
+        "id": profile.id,
+        "fname": profile._json.first_name,
+        "lname": profile._json.last_name,
+        "birthday": profile._json.birthday
     };
 
     const messageToUser = {
