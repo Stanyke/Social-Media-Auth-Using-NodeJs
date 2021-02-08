@@ -14,7 +14,9 @@
   "keywords": [
     "Social",
     "Media",
-    "Auth"
+    "Auth",
+    "Google OAuth",
+    "Facebook OAuth"
   ],
   "author": "Stanley Chibuike",
   "license": "ISC",
