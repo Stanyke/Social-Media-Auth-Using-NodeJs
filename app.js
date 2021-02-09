@@ -28,12 +28,9 @@ app.get("/failed", (req,res)=> res.send("you have failed to login"));
 
 app.get('/auth/google', passport.authenticate('google', { scope: ['profile','email'] }));
 
-app.get('/google/callback', passport.authenticate('google', {
-    successRedirect : '/profile',
-    failureRedirect : '/failed'
-    }), (req, res) => {
-        const userDetails =  req.user
-        res.status(200).send(userDetails)
+app.get('/auth/google/callback', passport.authenticate('google'), (req, res) => {
+        const messageGotten =  req.user
+        res.status(200).json({"success": messageGotten.success, "message": messageGotten.message, "user": messageGotten.user})
     }
 );
 
