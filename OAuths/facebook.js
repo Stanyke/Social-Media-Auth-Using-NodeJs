@@ -7,38 +7,32 @@ require('dotenv').config()
 const FbPassport = passport.use(new FacebookStrategy({
     clientID: process.env.FB_APP_ID,
     clientSecret: process.env.FB_APP_SECRET,
-    callbackURL: "http://localhost:5000/facebook/callback",
+    callbackURL: "http://localhost:5000/auth/facebook/callback",
     profileFields   : ['id','displayName','name','gender','picture.type(large)','email']
 }, async (accessToken, refreshToken, profile, done) => {
 
     const userData = {
         "id": profile.id,
-        "fname": profile._json.first_name,
-        "lname": profile._json.last_name,
+        "firstname": profile._json.first_name,
+        "lastname": profile._json.last_name,
         "birthday": profile._json.birthday,
-        "email": profile._json.email
+        "email": profile._json.email,
+        "photo": profile.photos[0].value,
+        "gender": profile.gender,
+        "token": accessToken
     };
 
-    const messageToUser = {
-        "message": {
-            "accesToken": accessToken,
-            "refreshToken": refreshToken,
-            "profile": profile
-        }
-    }
-
-    //console.log(messageToUser)
-    //console.log(profile)
+    //console.log(userData)
 
     
     //return done(null,profile)
     
     let getUser = await User.findOne({email: userData.email}).exec()
     if(getUser){
-        return done(null, { "success": false, "message": "Email already registered with us." })
+        return done(null, { "success": false, "message": "Email already registered with us.", "user": userData })
     }
     else{
-        return done(null, { "success": false, "message": `Email: ${userData.email} was not found.` })
+        return done(null, { "success": false, "message": `Email: ${userData.email} was not found.`, "user": userData  })
     }
 
     //return messageToUser

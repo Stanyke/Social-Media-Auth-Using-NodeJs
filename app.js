@@ -37,20 +37,13 @@ app.get('/google/callback', passport.authenticate('google', {
     }
 );
 
-app.get('/facebook/callback', passport.authenticate('facebook', {
-    successRedirect : '/profile',
-    failureRedirect : '/failed'
-    }), (req, res) => {
-        const userDetails =  req.user
-        res.status(200).send(userDetails)
+app.get('/auth/facebook/callback', passport.authenticate('facebook'), (req, res) => {
+        const messageGotten =  req.user
+        res.status(200).json({"success": messageGotten.success, "message": messageGotten.message, "user": messageGotten.user})
     }
 );
 
 app.get('/auth/facebook', passport.authenticate('facebook', { scope : 'email,user_photos' }))
-
-app.get('/profile',(req,res) => {
-    res.render("profile.ejs")
-})
 
 
 module.exports = app;
