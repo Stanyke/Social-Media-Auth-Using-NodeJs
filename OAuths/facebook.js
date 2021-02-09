@@ -7,7 +7,7 @@ require('dotenv').config()
 const FbPassport = passport.use(new FacebookStrategy({
     clientID: process.env.FB_APP_ID,
     clientSecret: process.env.FB_APP_SECRET,
-    callbackURL: "https://social-media-auth.herokuapp.com/auth/facebook/callback",
+    callbackURL: "http://localhost:5000/auth/facebook/callback",
     profileFields   : ['id','displayName','name','gender','picture.type(large)','email']
 }, async (accessToken, refreshToken, profile, done) => {
 
