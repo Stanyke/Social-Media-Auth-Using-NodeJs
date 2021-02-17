@@ -14,8 +14,8 @@ passport.deserializeUser( (id, done) => {
 });
 
 exports.OAuthRegister = async (userData) => {
-    const firstname = textCaseHandler.firstLetterInSetenceToCapital(userData.firstname)
-    const lastname = textCaseHandler.firstLetterInSetenceToCapital(userData.lastname)
+    const firstname = textCaseHandler.firstLetterUpperCase(userData.firstname)
+    const lastname = textCaseHandler.firstLetterUpperCase(userData.lastname)
     const email = userData.email.toLowerCase()
 
     let currentUser = await User.findOne({email})
