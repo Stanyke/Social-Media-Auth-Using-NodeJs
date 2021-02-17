@@ -1,7 +1,6 @@
 const app = require('./index')
 const passport = require("passport")
 
-const passportHandler = require("../utils/passportJsHandler")
 const facebookPassportAuth = require("./oauths/facebook")
 const googlePassportAuth = require("./oauths/google")
 
