@@ -1,10 +1,10 @@
 const mongoose = require('mongoose');
 const UserSchema = mongoose.Schema({
-    fname: {
+    firstname: {
         type: String,
         required: true
     },
-    lname: {
+    lastname: {
         type: String,
         required: true
     },
@@ -12,14 +12,10 @@ const UserSchema = mongoose.Schema({
         type: String,
         required: true
     },
-    source: {
-        type: String,
-        required: true
-    },
-    time: {
-        type: Date,
-        default: Date.now
+    oauth: {
+        provider: { type: String, enum: ['google', 'facebook'] },
+        oauthID: { type: String }
     }
-})
+}, { timestamps: true});
 
 const User = module.exports = mongoose.model('User', UserSchema)

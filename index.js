@@ -2,6 +2,8 @@ const express = require('express')
 const cors = require('cors')
 const app = express()
 
+require('dotenv').config()
+
 const runDB = require("./config/DB")
 
 app.set("view engine","ejs")

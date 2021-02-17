@@ -1,46 +1,32 @@
 const app = require('./index')
 const passport = require("passport")
-const FbPassport = require("./OAuths/facebook")
-const GooglePassport = require("./OAuths/google")
-
-require('dotenv').config()
+const FbPassport = require("./oauths/facebook")
+const GooglePassport = require("./oauths/google")
 
 app.use(passport.initialize())
 app.use(passport.session())
-
-
 
 app.get('/' , (req,res)=>{
     res.render("index.ejs")
 })
 
-passport.serializeUser( (user, done) => {
-    console.log('serialize: ', user)
-    done(null, user);
+app.get('/users/auth/google/register', passport.authenticate('google', { scope: ['profile','email'], state: "register" }));
+
+app.get('/users/auth/google/login', passport.authenticate('google', { scope: ['profile','email'], state: "login" }));
+
+app.get('/users/auth/google/callback', passport.authenticate('google'), async (req, res) => {
+    const messageGotten = await req.user
+    res.status(messageGotten.statusCode).json(messageGotten.data)
 });
 
-passport.deserializeUser( (id, done) => {
-    console.log('deserialize :', user)
-    done(null, user);
+app.get('/users/auth/facebook/register', passport.authenticate('facebook', { scope : 'email,user_photos', state: 'register' }))
+
+app.get('/users/auth/facebook/login', passport.authenticate('facebook', { scope : 'email,user_photos', state: 'login' }))
+
+app.get('/users/auth/facebook/callback', passport.authenticate('facebook'), async (req, res) => {
+    const messageGotten = await req.user
+    res.status(messageGotten.statusCode).json(messageGotten.data)
 });
-
-app.get("/failed", (req,res)=> res.send("you have failed to login"));
-
-app.get('/auth/google', passport.authenticate('google', { scope: ['profile','email'] }));
-
-app.get('/auth/google/callback', passport.authenticate('google'), (req, res) => {
-        const messageGotten =  req.user
-        res.status(200).json({"success": messageGotten.success, "message": messageGotten.message, "user": messageGotten.user})
-    }
-);
-
-app.get('/auth/facebook/callback', passport.authenticate('facebook'), (req, res) => {
-        const messageGotten =  req.user
-        res.status(200).json({"success": messageGotten.success, "message": messageGotten.message, "user": messageGotten.user})
-    }
-);
-
-app.get('/auth/facebook', passport.authenticate('facebook', { scope : 'email,user_photos' }))
 
 
 module.exports = app;
