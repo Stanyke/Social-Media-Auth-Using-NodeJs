@@ -30,7 +30,7 @@ const googlePassportAuth = passport.use(new GoogleStrategy({
         }
     }
     catch(e){
-        return done(null, {"data": {"success": false, "message": "Registration failed, try again."}, "statusCode": 500})
+        return done(null, {"data": {"success": false, "message": "Google Auth failed, try again."}, "statusCode": 500})
     }
 }
 ));

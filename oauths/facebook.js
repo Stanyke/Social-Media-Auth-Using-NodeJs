@@ -33,7 +33,7 @@ const facebookPassportAuth = passport.use(new FacebookStrategy({
         
     }
     catch(e){
-        return done(null, {"data": {"success": false, "message": "Registration failed, try again."}, "statusCode": 500})
+        return done(null, {"data": {"success": false, "message": "Facebook Auth failed, try again."}, "statusCode": 500})
     }
 }
 ));
