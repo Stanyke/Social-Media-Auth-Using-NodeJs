@@ -1,7 +1,9 @@
 const app = require('./index')
 const passport = require("passport")
-const FbPassport = require("./oauths/facebook")
-const GooglePassport = require("./oauths/google")
+
+const passportHandler = require("../utils/passportJsHandler")
+const facebookPassportAuth = require("./oauths/facebook")
+const googlePassportAuth = require("./oauths/google")
 
 app.use(passport.initialize())
 app.use(passport.session())
