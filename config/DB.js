@@ -5,8 +5,6 @@ const db = "mongodb+srv://"+process.env.MONGOOSE_USER+":"+process.env.MONGOOSE_P
 const runDB = mongoose.connect(db, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
-    useCreateIndex: true,
-    useFindAndModify: false
 }).then(() => {
     console.log(`MongodDB's mongoose is connected`)
 }).catch((err) => {
